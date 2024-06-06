@@ -19,7 +19,19 @@ function addRow() {
     actionCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
 }
 
+var checked = true;
 
+document.getElementById("isDecimalPointAllowed").addEventListener('change', function() {
+    checked = this.checked;
+    // Check if the checkbox is checked
+    if (this.checked) {
+        // If checked, set the step size to 0.1
+        document.querySelector('.pointsAchieved').step = 0.1;
+    } else {
+        // If not checked, set the step size to 1
+        document.querySelector('.pointsAchieved').step = 1;
+    }
+});
 
 
 function deleteRow(button) {
@@ -35,7 +47,8 @@ function calculateMinCases() {
 
     rows.forEach(row => {
         const casesCount = parseInt(row.querySelector('.casesCount').value);
-        const pointsAchieved = parseInt(row.querySelector('.pointsAchieved').value);
+        row.querySelector('.pointsAchieved').value = checked ? parseFloat(row.querySelector('.pointsAchieved').value) : parseInt(row.querySelector('.pointsAchieved').value);
+        const pointsAchieved = row.querySelector('.pointsAchieved').value
         totalCases += casesCount;
         totalPoints += casesCount * pointsAchieved;
     });
